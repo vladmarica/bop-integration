@@ -1,0 +1,16 @@
+[
+{
+  "modid": "bopintegration",
+  "name": "BOP Integration",
+  "description": "Makes Biomes O' Plenty work nicely with other mods.",
+  "version": "${version}",
+  "mcversion": "${mcversion}",
+  "url": "",
+  "updateUrl": "",
+  "authorList": ["Quintinity"],
+  "credits": "",
+  "logoFile": "",
+  "screenshots": [],
+  "dependencies": []
+}
+]
