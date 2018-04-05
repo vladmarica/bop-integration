@@ -1,4 +1,4 @@
-package com.vladmarica.bop;
+package com.vladmarica.bop.thaumcraft;
 import biomesoplenty.api.biome.BOPBiome;
 import cpw.mods.fml.common.IWorldGenerator;
 import net.minecraft.world.World;

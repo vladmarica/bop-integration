@@ -1,5 +1,7 @@
-package com.vladmarica.bop;
+package com.vladmarica.bop.thaumcraft;
 
+import com.vladmarica.bop.BOPIntegrationMod;
+import com.vladmarica.bop.thaumcraft.ThaumcraftCompatWorldGenerator;
 import cpw.mods.fml.common.registry.GameRegistry;
 
 public class ThaumcraftModCompat {

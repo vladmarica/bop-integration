@@ -1,5 +1,9 @@
 package com.vladmarica.bop;
 
+import biomesoplenty.common.world.generation.WorldGenFieldAssociation;
+import com.vladmarica.bop.legacy.BOPLegacyWorldGenerator;
+import com.vladmarica.bop.legacy.WorldGenNothing;
+import com.vladmarica.bop.thaumcraft.ThaumcraftModCompat;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
@@ -18,6 +22,7 @@ public class BOPIntegrationMod {
     @EventHandler
     public void init(FMLInitializationEvent event) {
         GameRegistry.registerWorldGenerator(new BOPLegacyWorldGenerator(), 0);
+        WorldGenFieldAssociation.associateFeature("gravesPerChunk", new WorldGenNothing());
     }
 
     @EventHandler
