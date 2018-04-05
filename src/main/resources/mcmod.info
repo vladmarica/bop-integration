@@ -1,6 +1,6 @@
 [
 {
-  "modid": "bopintegration",
+  "modid": "BOPIntegration",
   "name": "BOP Integration",
   "description": "Makes Biomes O' Plenty work nicely with other mods.",
   "version": "${version}",
