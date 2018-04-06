@@ -33,7 +33,7 @@ public class ThaumcraftCompatWorldGenerator implements IWorldGenerator {
                 return;
             }
 
-            if (random.nextInt(70) == 3) {
+            if (random.nextInt(75) == 3) {
                 int x = chunkX * 16 + random.nextInt(16);
                 int z = chunkZ * 16 + random.nextInt(16);
                 int y = world.getHeightValue(x, z);

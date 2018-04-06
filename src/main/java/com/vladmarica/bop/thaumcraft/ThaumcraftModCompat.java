@@ -4,7 +4,7 @@ import com.vladmarica.bop.BOPIntegrationMod;
 import com.vladmarica.bop.thaumcraft.ThaumcraftCompatWorldGenerator;
 import cpw.mods.fml.common.registry.GameRegistry;
 
-public class ThaumcraftModCompat {
+public final class ThaumcraftModCompat {
 
     public static void apply() {
         GameRegistry.registerWorldGenerator(new ThaumcraftCompatWorldGenerator(), 0);
