@@ -1,4 +1,4 @@
-package com.vladmarica.bop.legacy;
+package com.vladmarica.bop.tweaks;
 
 import net.minecraft.world.World;
 import net.minecraft.world.gen.feature.WorldGenerator;

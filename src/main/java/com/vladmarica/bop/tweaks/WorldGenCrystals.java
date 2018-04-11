@@ -1,4 +1,4 @@
-package com.vladmarica.bop.legacy;
+package com.vladmarica.bop.tweaks;
 
 import java.util.Random;
 

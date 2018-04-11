@@ -9,16 +9,20 @@ public class Config {
     private Configuration configurationFile;
 
     public boolean genCelestialCrystals;
-    public boolean getBiomeOre;
+    public boolean genBiomeEssence;
     public boolean removeNetherGravestones;
+    public boolean craftableRottenFlesh;
+    public boolean removeEnderporterRecipe;
+    public boolean harderBiomeFinderRecipe;
     public boolean fixSilverwoodTrees;
-    public boolean rubberTreeBiomeBlacklist;
+    public boolean addMissingAspects;
+    public boolean fixRubberTrees;
 
     public Config(File file) {
         configurationFile = new Configuration(file);
-        configurationFile.addCustomCategoryComment("Legacy", "These features are unavailable in the 1.7.10 version of BOP, but you can reenable them here.");
+        configurationFile.addCustomCategoryComment("Tweaks", "These options modify BOP itself. Some of these features are unavailable in the 1.7.10 version of BOP but existed in previous or later versions.");
         configurationFile.addCustomCategoryComment("Thaumcraft", "Options to make BOP work better with Thaumcraft");
-        configurationFile.addCustomCategoryComment("Industrial Craft 2", "Options to make BOP work better with IC2");
+        configurationFile.addCustomCategoryComment("IC2", "Options to make BOP work better with IC2");
 
         configurationFile.load();
         sync();
@@ -26,11 +30,15 @@ public class Config {
     }
 
     public void sync() {
-        genCelestialCrystals = configurationFile.getBoolean("genCelestialCrystals", "Legacy", true, "Generate Celestial Crystals in the End. Used to make Ambrosia.");
-        getBiomeOre = configurationFile.getBoolean("getBiomeOre", "Legacy", true, "Generate Biome Ore in the End. Drops Biome Essence.");
-        removeNetherGravestones = configurationFile.getBoolean("removeNetherGravestones", "Legacy", true, "Prevent gravestones from spawning in the Nether. They are ugly and useless.");
-
+        genCelestialCrystals = configurationFile.getBoolean("genCelestialCrystals", "Tweaks", true, "Generate Celestial Crystals in the End. Used to make Ambrosia.");
+        genBiomeEssence = configurationFile.getBoolean("genBiomeEssence", "Tweaks", true, "Generate Biome Essence Ore in the End. Drops Biome Essence.");
+        removeNetherGravestones = configurationFile.getBoolean("removeNetherGravestones", "Tweaks", true, "Prevent gravestones from spawning in the Nether. They are ugly and useless.");
+        craftableRottenFlesh = configurationFile.getBoolean("craftableRottenFlesh", "Tweaks", true, "Adds a recipe to craft rotten flesh out of flesh chunks and an eyebulb.");
+        removeEnderporterRecipe = configurationFile.getBoolean("removeEnderporterRecipe", "Tweaks", true, "It can still be cheating in by an op.");
+        harderBiomeFinderRecipe = configurationFile.getBoolean("harderBiomeFinderRecipe", "Tweaks", true, "Makes the recipe use end crystals and ghastly souls.");
         fixSilverwoodTrees = configurationFile.getBoolean("fixSilverwoodTrees", "Thaumcraft", true, "Allows Silverwood trees to spawn in all forest and plains biomes.");
+        addMissingAspects = configurationFile.getBoolean("addMissingAspects", "Thaumcraft", true, "Many BOP items don't give any aspects. ");
+        fixRubberTrees = configurationFile.getBoolean("fixRubberTrees", "IC2", true, "Fix rubber trees incorrecting spawning in grassland and marsh biomes.");
     }
 
     public void save() {

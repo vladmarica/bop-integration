@@ -7,13 +7,13 @@ import ic2.core.IC2;
 public final class IC2ModCompat {
 
     public static void apply() {
-        if (IC2.enableWorldGenTreeRubber) {
+        if (IC2.enableWorldGenTreeRubber && BOPIntegrationMod.config.fixRubberTrees) {
             if (!BOPIntegrationMod.unregisterWorldGenerator(IC2.getInstance())) {
-                BOPIntegrationMod.LOGGER.error("Failed to unregister IC2 world generator. This may result in no rubber trees.");
+                BOPIntegrationMod.logger.error("Failed to unregister IC2 world generator. This may result in no rubber trees.");
                 return;
             }
             GameRegistry.registerWorldGenerator(new IC2CompatWorldGenerator(), 0);
         }
-        BOPIntegrationMod.LOGGER.info("IC2 Biomes O' Plenty integration patch has been applied");
+        BOPIntegrationMod.logger.info("IC2 Biomes O' Plenty integration patch has been applied");
     }
 }
