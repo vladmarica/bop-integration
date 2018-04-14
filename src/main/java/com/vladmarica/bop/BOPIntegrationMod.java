@@ -7,6 +7,7 @@ import com.vladmarica.bop.ic2.IC2ModCompat;
 import com.vladmarica.bop.tweaks.BOPLegacyWorldGenerator;
 import com.vladmarica.bop.tweaks.WorldGenNothing;
 import com.vladmarica.bop.thaumcraft.ThaumcraftModCompat;
+import com.vladmarica.bop.tweaks.WorldGenWaspHiveFixed;
 import cpw.mods.fml.common.IWorldGenerator;
 import cpw.mods.fml.common.Loader;
 import cpw.mods.fml.common.event.FMLInitializationEvent;
@@ -43,6 +44,10 @@ public class BOPIntegrationMod {
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         GameRegistry.registerWorldGenerator(new BOPLegacyWorldGenerator(), 0);
+
+        if (config.waspHiveRarityModifier > 0) {
+            WorldGenFieldAssociation.associateFeature("waspHivesPerChunk", new WorldGenWaspHiveFixed());
+        }
 
         if (config.removeNetherGravestones) {
             WorldGenFieldAssociation.associateFeature("gravesPerChunk", new WorldGenNothing());

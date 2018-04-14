@@ -14,6 +14,7 @@ public class Config {
     public boolean craftableRottenFlesh;
     public boolean removeEnderporterRecipe;
     public boolean harderBiomeFinderRecipe;
+    public float waspHiveRarityModifier;
     public boolean fixSilverwoodTrees;
     public boolean addMissingAspects;
     public boolean fixRubberTrees;
@@ -36,6 +37,7 @@ public class Config {
         craftableRottenFlesh = configurationFile.getBoolean("craftableRottenFlesh", "Tweaks", true, "Adds a recipe to craft rotten flesh out of flesh chunks and an eyebulb.");
         removeEnderporterRecipe = configurationFile.getBoolean("removeEnderporterRecipe", "Tweaks", true, "It can still be cheating in by an op.");
         harderBiomeFinderRecipe = configurationFile.getBoolean("harderBiomeFinderRecipe", "Tweaks", true, "Makes the recipe use end crystals and ghastly souls.");
+        waspHiveRarityModifier = configurationFile.getFloat("waspHiveRarityModifier", "Tweaks", 1.0F, 0.0F, 1.0F, "You can use this option to make nether wasp hives rarer.");
         fixSilverwoodTrees = configurationFile.getBoolean("fixSilverwoodTrees", "Thaumcraft", true, "Allows Silverwood trees to spawn in all forest and plains biomes.");
         addMissingAspects = configurationFile.getBoolean("addMissingAspects", "Thaumcraft", true, "Many BOP items don't give any aspects. ");
         fixRubberTrees = configurationFile.getBoolean("fixRubberTrees", "IC2", true, "Fix rubber trees incorrecting spawning in grassland and marsh biomes.");
