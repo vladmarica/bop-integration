@@ -11,6 +11,7 @@ Every change can be enabled or disabled in the config file.
     * Removed Enderporter recipe. Can be reenabled in the config.
     * Made the Biome Finder recipe harder by making it require Celestial Crystals and Ghastly Souls.
     * Added a recipe to craft Rotten Flesh out of Chunks of Flesh and Eyebulbs.
+    * Added an option to lower the spawn rate of nether wasp hives.
 
 * Thaumcraft
     * Allow Silverwood trees to spawn all BOP biomes that are forests or plains.
