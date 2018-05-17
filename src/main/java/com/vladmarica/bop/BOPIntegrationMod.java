@@ -1,33 +1,45 @@
 package com.vladmarica.bop;
 
+import biomesoplenty.api.biome.BOPBiome;
+import biomesoplenty.api.biome.BOPBiomeDecorator;
+import biomesoplenty.api.content.BOPCBiomes;
 import biomesoplenty.api.content.BOPCBlocks;
 import biomesoplenty.api.content.BOPCItems;
+import biomesoplenty.common.biome.decoration.BOPOverworldBiomeDecorator;
+import biomesoplenty.common.biome.decoration.OverworldBiomeFeatures;
+import biomesoplenty.common.blocks.BlockBOPFoliage;
 import biomesoplenty.common.world.generation.WorldGenFieldAssociation;
 import com.vladmarica.bop.ic2.IC2ModCompat;
 import com.vladmarica.bop.tweaks.BOPLegacyWorldGenerator;
 import com.vladmarica.bop.tweaks.WorldGenNothing;
 import com.vladmarica.bop.thaumcraft.ThaumcraftModCompat;
 import com.vladmarica.bop.tweaks.WorldGenWaspHiveFixed;
+import cpw.mods.fml.common.FMLCommonHandler;
 import cpw.mods.fml.common.IWorldGenerator;
 import cpw.mods.fml.common.Loader;
-import cpw.mods.fml.common.event.FMLInitializationEvent;
 import cpw.mods.fml.common.event.FMLPostInitializationEvent;
 import cpw.mods.fml.common.Mod;
 import cpw.mods.fml.common.Mod.EventHandler;
 import cpw.mods.fml.common.event.FMLPreInitializationEvent;
+import cpw.mods.fml.common.eventhandler.EventBus;
+import cpw.mods.fml.common.eventhandler.EventPriority;
+import cpw.mods.fml.common.eventhandler.IEventListener;
+import cpw.mods.fml.common.eventhandler.SubscribeEvent;
 import cpw.mods.fml.common.registry.GameRegistry;
+import net.minecraft.block.Block;
 import net.minecraft.init.Items;
 import net.minecraft.item.ItemStack;
 import net.minecraft.item.crafting.CraftingManager;
 import net.minecraft.item.crafting.IRecipe;
+import net.minecraftforge.common.AchievementPage;
+import net.minecraftforge.common.MinecraftForge;
+import net.minecraftforge.event.world.BlockEvent;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 
 import java.lang.reflect.Field;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
+import java.util.concurrent.ConcurrentHashMap;
 
 @Mod(modid = BOPIntegrationMod.MODID, version = "1.0", dependencies = "required-after:BiomesOPlenty")
 public class BOPIntegrationMod {
@@ -39,11 +51,14 @@ public class BOPIntegrationMod {
     @EventHandler
     public void preInit(FMLPreInitializationEvent event) {
         config = new Config(event.getSuggestedConfigurationFile());
+        MinecraftForge.EVENT_BUS.register(this);
     }
 
     @EventHandler
     public void postInit(FMLPostInitializationEvent event) {
         GameRegistry.registerWorldGenerator(new BOPLegacyWorldGenerator(), 0);
+        decreaseKoruRarity();
+        cakeCleanup();
 
         if (config.waspHiveRarityModifier > 0) {
             WorldGenFieldAssociation.associateFeature("waspHivesPerChunk", new WorldGenWaspHiveFixed());
@@ -142,6 +157,53 @@ public class BOPIntegrationMod {
         catch (Exception ex) {
             ex.printStackTrace();
             return false;
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void decreaseKoruRarity() {
+        try {
+            Field[] biomeFields = BOPCBiomes.class.getDeclaredFields();
+            for (Field biomeField : biomeFields) {
+                BOPBiome<BOPBiomeDecorator> biome = (BOPBiome<BOPBiomeDecorator>) biomeField.get(null);
+                if (biome != null && biome.field_76760_I != null && biome.field_76760_I instanceof BOPOverworldBiomeDecorator) {
+                    BOPOverworldBiomeDecorator decorator = (BOPOverworldBiomeDecorator) biome.field_76760_I;
+                    OverworldBiomeFeatures features = decorator.bopFeatures;
+                    if (features.koruPerChunk > 0) {
+                        features.koruPerChunk *= 8;
+                    }
+                }
+            }
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
+        }
+    }
+
+    @SubscribeEvent(priority = EventPriority.HIGHEST)
+    public void onHarvest(BlockEvent.HarvestDropsEvent event) {
+        if (event.block.getClass() == BlockBOPFoliage.class && event.blockMetadata == 12) {
+            event.drops.clear();
+            event.dropChance = 1;
+            event.drops.add(new ItemStack(BOPCItems.turnipSeeds, 1));
+        }
+    }
+
+    @SuppressWarnings("unchecked")
+    private void cakeCleanup() {
+        try {
+            Field handlersField = EventBus.class.getDeclaredField("listeners");
+            handlersField.setAccessible(true);
+            ConcurrentHashMap<Object, ArrayList<IEventListener>> listeners = (ConcurrentHashMap<Object, ArrayList<IEventListener>>) handlersField.get(FMLCommonHandler.instance().bus());
+            for (Object o : listeners.keySet()) {
+                if (o.getClass().getSimpleName().equals("EventHandlerCake")) {
+                    FMLCommonHandler.instance().bus().unregister(o);
+                    logger.info("Unregistered cake crafting handler");
+                }
+            }
+        }
+        catch (Exception ex) {
+            ex.printStackTrace();
         }
     }
 }
